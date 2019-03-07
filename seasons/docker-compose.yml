@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+
+  silly-application:
+    container_name: react
+    image: create-react-app-silly-application:v0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+
