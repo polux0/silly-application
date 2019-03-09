@@ -2,45 +2,44 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay';
 
-const App = () => {
 
-	console.log('aloha');
+class App extends React.Component {
 
-	function getLocation() {
-	
-	  if (navigator.geolocation) {
-	    navigator.geolocation.getCurrentPosition(position => {
-	    	if (position) {
-	    		console.log("Requested geolocation => " + position);
-	    		console.log(position);
-	    	}
-	    });
-	  } else { 
-	   		console.log("Your browser doesn`t support geolocation API "); 
-	  }
+	constructor(props){
+
+		super(props);
+
+		this.state = {
+						latitude: null,
+					  	longitude: null,
+					  	errorMessage: null
+
+					 };
+
+		navigator.geolocation.getCurrentPosition(
+		    	position => {
+		    		this.setState({latitude: position.coords.latitude, longitude: position.coords.longitude})
+		    	},
+		    	err => {
+		    		this.setState({errorMessage: err.message})
+		    	}
+		)
 	}
+	render(){
 
-	function showPosition(position){
-		console.log('Current position => ' + position.coords.latitude + " he => " + position.coords.longitude);
+
+			if(this.state.errorMessage && !this.state.latitude){
+
+				return <div> Error : {this.state.errorMessage} </div>;
+			}
+			if(!this.state.errorMessage && this.state.latitude){
+
+				return <div> Latitude: {this.state.latitude} </div>;
+			}
+			else return <div> Loading... </div>;
+		
 	}
-
-	return (
-		<div> Hello there, from a container 
-			{getLocation()}
-		</div>
-	)
-};
-/// class App extends React.Component {
-
-// 	console.log('aloha');
-// 	render(){
-// 		return (
-// 		<div> Lattitude
-// 			<SeasonDisplay/>
-// 		</div>
-// 		) 
-// 	}
-// }
+}
 
 ReactDOM.render(
 	<App />,
