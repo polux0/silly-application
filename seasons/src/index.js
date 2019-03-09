@@ -2,32 +2,45 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay';
 
-// const App = () => {
+const App = () => {
 
-// 	// function success(success){
-// 	// 	console.log('Successfully aquired geolocation => ' + success);
-// 	// }
-// 	// function error(error){
-// 	// 	console.log('There is an error when trying to aquire geolocation => ' + error);
-// 	// }
+	console.log('aloha');
 
-// 	// navigator.geolocation.getCurrentPostion(error, success);
-
-// 	return (
-// 		<div> Hello there, from a container 
-		
-// 		</div>
-// 	)
-// };
-class App extends React.Component {
-	render(){
-		return (
-		<div> Lattitude
-			<SeasonDisplay/>
-		</div>
-		) 
+	function getLocation() {
+	
+	  if (navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(position => {
+	    	if (position) {
+	    		console.log("Requested geolocation => " + position);
+	    		console.log(position);
+	    	}
+	    });
+	  } else { 
+	   		console.log("Your browser doesn`t support geolocation API "); 
+	  }
 	}
-}
+
+	function showPosition(position){
+		console.log('Current position => ' + position.coords.latitude + " he => " + position.coords.longitude);
+	}
+
+	return (
+		<div> Hello there, from a container 
+			{getLocation()}
+		</div>
+	)
+};
+/// class App extends React.Component {
+
+// 	console.log('aloha');
+// 	render(){
+// 		return (
+// 		<div> Lattitude
+// 			<SeasonDisplay/>
+// 		</div>
+// 		) 
+// 	}
+// }
 
 ReactDOM.render(
 	<App />,
