@@ -16,14 +16,23 @@ class App extends React.Component {
 
 					 };
 
+		console.log('Component says hi from a constructor');
+	}
+	componentDidMount(){
+
 		navigator.geolocation.getCurrentPosition(
-		    	position => {
-		    		this.setState({latitude: position.coords.latitude, longitude: position.coords.longitude})
-		    	},
-		    	err => {
-		    		this.setState({errorMessage: err.message})
-		    	}
-		)
+
+	    	position => {
+	    		this.setState({latitude: position.coords.latitude, longitude: position.coords.longitude})
+	    	},
+	    	err => {
+	    		this.setState({errorMessage: err.message})
+	    	}
+		)	
+
+	}
+	componentDidUpdate(){
+		console.log('Component did update!!!');
 	}
 	render(){
 
@@ -34,7 +43,7 @@ class App extends React.Component {
 			}
 			if(!this.state.errorMessage && this.state.latitude){
 
-				return <div> Latitude: {this.state.latitude} </div>;
+				return <div> <SeasonDisplay latitude = {this.state.latitude} /> </div>;
 			}
 			else return <div> Loading... </div>;
 		
